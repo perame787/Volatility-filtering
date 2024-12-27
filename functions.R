@@ -11,7 +11,7 @@ library(quantmod)
 
 # Data loading and manipulation------------------------------------------------------------
 #Function to load from SQL
-sql_load_tickers <- function(tickers, from, to, convert_to_EUR){
+sql_load_tickers <- function(tickers, from, to=Sys.Date(), convert_to_EUR){
   con1  <-  odbcDriverConnect('driver={SQL Server};
     server=production_sql;
     database=CTAManager;
@@ -62,7 +62,7 @@ sql_load_tickers <- function(tickers, from, to, convert_to_EUR){
 }
 
 #Function to download data from Yahoo Finance with the format from before
-yahoo_load  <-  function(tickers, from, to){
+yahoo_load  <-  function(tickers, from, to=Sys.Date()){
   dtab  <-  data.table()
   for (i in seq_along(tickers)) {
     temp_dtab <- as.data.table(getSymbols(Symbols = tickers[i], src = "yahoo", 
